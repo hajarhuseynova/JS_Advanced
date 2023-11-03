@@ -9,32 +9,32 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <title>Document</title>
     <style>
-      body {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      img {
-        width: 100%;
+      #nimage{
+        height: 120px;
       }
     </style>
+    <title>Document</title>
   </head>
   <body>
-    <div class="container mt-3">
-      <div class="row"></div>
+    <div class="container my-5">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="input-group">
+            <input type="text" id="txtSearch" class="form-control" />
+            <button class="btn btn-primary" type="button" id="btnSearch">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3" id="country-details"></div>
+      <div class="card mb-3">
+        <div class="card-header">Neighboors</div>
+        <div class="card-body">
+          <div class="row" id="neighbors"></div>
+        </div>
+      </div>
     </div>
     <!-- <script src="script.js"></script> -->
     <script
