@@ -37,7 +37,3 @@ login("hajarih", "hajar123@", (user) => {
 });
 
 console.log("end");
-
-// PROMISE
-
-// ASYNC

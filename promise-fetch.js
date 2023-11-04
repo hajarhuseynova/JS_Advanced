@@ -1,36 +1,48 @@
 const btnSearch = document.querySelector("#btnSearch");
 const input = document.querySelector("#txtSearch");
+const details = document.querySelector("#details");
+const cdetails = document.querySelector("#country-details");
+const neighbors = document.querySelector("#neighbors");
 
 btnSearch.addEventListener("click", function () {
   let txt = input.value;
+  details.style.opacity = 0;
   getCountry(txt);
 });
 function getCountry(country) {
-  const request = new XMLHttpRequest();
-  request.open("GET", "https://restcountries.com/v3.1/name/" + country);
-  request.send();
-
-  request.addEventListener("load", function () {
-    //   const data = this.responseText;
-    // change string to json
-    const data = JSON.parse(this.responseText);
-    renderCountry(data[0]);
-    const countries = data[0].borders.toString();
-    //add neightboor
-    const req = new XMLHttpRequest();
-    req.open("GET", "https://restcountries.com/v3.1/alpha?codes=" + countries);
-    req.send();
-    req.addEventListener("load", function () {
-      const data = JSON.parse(this.responseText);
+  fetch("https://restcountries.com/v3.1/name/" + country)
+    .then((response) => {
+      // stream gelir
+      if (!response.ok) {
+        throw new Error("Can not find");
+      }
+      return response.json();
+    })
+    // datamiz gelir
+    .then((data) => {
+      renderCountry(data[0]);
+      const countries = data[0].borders;
+      if (!countries) {
+        throw new Error("Can not find neighbors");
+      }
+      return fetch(
+        "https://restcountries.com/v3.1/alpha?codes=" + countries.toString()
+      );
+    })
+    .then((response) => {
+      // stream gelir
+      return response.json();
+    })
+    .then((data) => {
       renderNeighbors(data);
-    });
-  });
+    })
+    .catch((err) => renderError(err));
 }
 function renderCountry(data) {
+  cdetails.innerHTML = "";
+  neighbors.innerHTML = "";
   let html = `
-  <div class="card-header">Result</div>
-  <div class="card-body">
-    <div class="row">
+
       <div class="col-4">
         <img src="${data.flags.png}" alt="CountryImage" />
       </div>
@@ -58,9 +70,9 @@ function renderCountry(data) {
   })</div>
       </div>
       </div>
-    </div>
-  </div>
+ 
     `;
+  details.style.opacity = 1;
   document.querySelector("#country-details").innerHTML = html;
 }
 function renderNeighbors(data) {
@@ -78,4 +90,16 @@ function renderNeighbors(data) {
     `;
   }
   document.querySelector("#neighbors").innerHTML = html;
+}
+const errors = document.getElementById("errors");
+function renderError(err) {
+  const html = `
+<div class="alert alert-danger">
+${err.message}
+</div>
+`;
+  setTimeout(() => {
+    errors.innerHTML = "";
+  }, 5000);
+  errors.innerHTML = html;
 }

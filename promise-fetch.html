@@ -10,14 +10,18 @@
       crossorigin="anonymous"
     />
     <style>
-      #nimage{
+      #nimage {
         height: 120px;
+      }
+      #details {
+        opacity: 0;
       }
     </style>
     <title>Document</title>
   </head>
   <body>
     <div class="container my-5">
+      <div id="errors"></div>
       <div class="card mb-3">
         <div class="card-body">
           <div class="input-group">
@@ -28,11 +32,20 @@
           </div>
         </div>
       </div>
-      <div class="card mb-3" id="country-details"></div>
-      <div class="card mb-3">
-        <div class="card-header">Neighboors</div>
-        <div class="card-body">
-          <div class="row" id="neighbors"></div>
+
+      <div id="details">
+        <div class="card mb-3">
+          <div class="card-header">Result:</div>
+          <div class="card-body">
+            <div class="row" id="country-details"></div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">Neighboors</div>
+          <div class="card-body">
+            <div class="row" id="neighbors"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,6 +54,6 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="ajax.js"></script>
+    <script src="promise-fetch.js"></script>
   </body>
 </html>
